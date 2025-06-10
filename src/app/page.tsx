@@ -22,7 +22,7 @@ export default function LandingHero() {
 
           <Link
             href={"/loginpage"}
-            className="bg-gradient-to-r from-[#FF6A00] to-[#FFB700] text-white px-4 py-2 sm:px-6 sm:py-3 rounded-xl font-semibold shadow hover:opacity-90 w-full max-w-[80px] h-[30px] shadow-lg text-center transition-transform duration-200 hover:scale-105 hover:shadow-lg flex items-center justify-center"
+            className="bg-gradient-to-r from-[#FF6A00] to-[#FFB700] text-white px-4 py-2 sm:px-6 sm:py-3 rounded-xl font-semibold hover:opacity-90 w-full max-w-[80px] h-[30px] shadow-lg text-center transition-transform duration-200 hover:scale-105 hover:shadow-lg flex items-center justify-center"
             style={{ borderColor: 'rgb(248, 115, 7)', borderWidth: '1px' }}
           >
             Login
