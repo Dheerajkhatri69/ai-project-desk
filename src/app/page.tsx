@@ -205,13 +205,32 @@ export default function LandingHero() {
         </div>
       </section>
 
-      {/* Call-to-Action Gradient Section */}
-      <section className="w-full py-20 flex flex-col items-center justify-center relative overflow-hidden cta-gradient-bg">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-white text-center mb-4 drop-shadow-lg">Ready to Transform Your<br className="hidden md:block" /> Construction Business?</h2>
-        <p className="text-lg text-white/90 text-center mb-10 max-w-2xl mx-auto">Join thousands of contractors who are already using AI Project Desk to build better, faster, and more efficiently.</p>
+      <section
+        className="w-full py-20 flex flex-col items-center justify-center overflow-hidden"
+        style={{
+          background: "linear-gradient(120deg, #ffb700 0%, #ff6a00 40%, #00e0ff 100%)",
+          position: "relative",
+        }}
+      >
+        <h2 className="text-4xl md:text-5xl font-extrabold text-white text-center mb-4 drop-shadow-lg">
+          Ready to Transform Your
+          <br className="hidden md:block" />
+          Construction Business?
+        </h2>
+        <p className="text-lg text-white/90 text-center mb-10 max-w-2xl mx-auto">
+          Join thousands of contractors who are already using AI Project Desk to build better, faster, and more efficiently.
+        </p>
         <div className="flex flex-col md:flex-row gap-6 justify-center mb-16">
-          <a href="#start-trial" className="bg-white text-[#0052CC] font-extrabold text-lg px-10 py-4 rounded-xl shadow hover:bg-blue-50 text-center transition-transform duration-200 hover:scale-105 hover:shadow-xl">Start Free Trial <span className="ml-2">→</span></a>
-          <a href="#schedule-demo" className="border-2 border-white text-white font-extrabold text-lg px-10 py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-white/10 text-center transition-transform duration-200 hover:scale-105 hover:shadow-xl">
+          <a
+            href="#start-trial"
+            className="bg-white text-[#0052CC] font-extrabold text-lg px-10 py-4 rounded-xl shadow hover:bg-blue-50 text-center transition-transform duration-200 hover:scale-105 hover:shadow-xl"
+          >
+            Start Free Trial <span className="ml-2">→</span>
+          </a>
+          <a
+            href="#schedule-demo"
+            className="border-2 border-white text-white font-extrabold text-lg px-10 py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-white/10 text-center transition-transform duration-200 hover:scale-105 hover:shadow-xl"
+          >
             <PlayCircle size={24} className="text-white" /> Schedule Demo
           </a>
         </div>
@@ -230,6 +249,7 @@ export default function LandingHero() {
           </div>
         </div>
       </section>
+
 
       {/* Support Section */}
       <section className="w-full bg-[#f7fafd] py-16 flex flex-col items-center">

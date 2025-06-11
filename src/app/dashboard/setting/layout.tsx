@@ -4,10 +4,10 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider>
+    <SidebarProvider >
       <AppSidebar />
-      <main>
-        <SidebarTrigger />
+      <main className="p-0">
+        <SidebarTrigger className="fixed top-30 z-50" />
         {children}
       </main>
     </SidebarProvider>

@@ -1,10 +1,23 @@
 "use client";
 
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { useState } from "react";
+
 export default function CreateProjectPage() {
+  const [projectStatus, setProjectStatus] = useState("Pending");
+
   return (
-    <div className="flex w-full h-screen bg-white">
+    <div className="flex w-full h-screen bg-white overflow-hidden">
       {/* Left: Google Map */}
-      <div className="flex-1 relative min-w-[350px]">
+      <div className="flex-1 relative min-w-[350px] h-full">
         <iframe
           title="Google Map"
           width="100%"
@@ -15,73 +28,89 @@ export default function CreateProjectPage() {
           allowFullScreen
           className="w-full h-full"
         ></iframe>
-        {/* Example marker popup (static for demo) */}
         <div className="absolute left-1/2 top-[38%] transform -translate-x-1/2 -translate-y-full bg-white rounded-lg shadow px-4 py-2 text-gray-800 text-sm min-w-[260px]">
           8031 Main Street, Stanton, California 90680
           <button className="absolute top-1 right-2 text-gray-400 hover:text-gray-700">×</button>
         </div>
       </div>
 
-      {/* Right: Add Project Details Form */}
-      <div className="w-full max-w-xl bg-white border-l border-gray-200 h-full overflow-y-auto flex flex-col">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h2 className="text-xl font-semibold">Add Project Details</h2>
-          <button className="text-2xl text-gray-400 hover:text-gray-700">&times;</button>
-        </div>
-        <form className="flex-1 px-6 py-4 space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">Project ID *</label>
-              <input className="w-full border-b border-gray-200 focus:outline-none py-1" value="1002" readOnly />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">Project Name *</label>
-              <input className="w-full border-b border-gray-200 focus:outline-none py-1" />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">Project Status</label>
-              <input className="w-full border-b border-gray-200 focus:outline-none py-1" value="Pending" readOnly />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">Project Type *</label>
-              <input className="w-full border-b border-gray-200 focus:outline-none py-1" />
-            </div>
-            <div className="col-span-2">
-              <label className="block text-xs text-gray-500 mb-1">Customer *</label>
-              <input className="w-full border-b border-gray-200 focus:outline-none py-1" />
-            </div>
-            <div className="col-span-2">
-              <label className="block text-xs text-gray-500 mb-1">Street</label>
-              <input className="w-full border-b border-gray-200 focus:outline-none py-1" />
-            </div>
-            <div className="col-span-2">
-              <label className="block text-xs text-gray-500 mb-1">Street 2</label>
-              <input className="w-full border-b border-gray-200 focus:outline-none py-1" />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">City</label>
-              <input className="w-full border-b border-gray-200 focus:outline-none py-1" />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">State</label>
-              <input className="w-full border-b border-gray-200 focus:outline-none py-1" />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">Zip</label>
-              <input className="w-full border-b border-gray-200 focus:outline-none py-1" />
-            </div>
-            <div className="col-span-2 flex items-center gap-2">
-              <label className="block text-xs text-gray-500 mb-1">Use Project Templates</label>
-              <span className="text-gray-400 cursor-pointer" title="Info">&#9432;</span>
-            </div>
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-[#16253b] text-white font-semibold py-3 rounded mt-6 hover:bg-[#0e1a2a] transition"
-          >
-            Create Project
-          </button>
-        </form>
+      {/* Right: Project Form */}
+      <div className="w-full max-w-xl h-full flex flex-col border-l-4 border-amber-400 rounded-xl">
+        <Card className="flex-1 flex flex-col h-full">
+          <CardHeader className="flex items-center justify-between border-b pb-2 pt-3 px-4">
+            <CardTitle className="text-base">Add Project Details</CardTitle>
+          </CardHeader>
+
+          <CardContent className="flex-1 flex flex-col px-4 py-3">
+            <form className="flex-1 flex flex-col justify-between">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                <div>
+                  <label className="block text-xs text-gray-500 mb-0.5">Project ID *</label>
+                  <Input value="1002" readOnly className="h-8" />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-0.5">Project Name *</label>
+                  <Input placeholder="Enter project name" className="h-8" />
+                </div>
+                <div >
+                  <label className="block text-xs text-gray-500 mb-0.5">Project Status *</label>
+                  <Select value={projectStatus} onValueChange={setProjectStatus}>
+                    <SelectTrigger className="h-8 w-full">
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Pending">Pending</SelectItem>
+                      <SelectItem value="Bidding">Bidding</SelectItem>
+                      <SelectItem value="Submittal">Submittal</SelectItem>
+                      <SelectItem value="Unscheduled">Unscheduled</SelectItem>
+                      <SelectItem value="Started">Started</SelectItem>
+                      <SelectItem value="Completed">Completed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-0.5">Project Type *</label>
+                  <Input placeholder="Enter project type" className="h-8" />
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-xs text-gray-500 mb-0.5">Customer *</label>
+                  <Input placeholder="Enter customer name" className="h-8" />
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-xs text-gray-500 mb-0.5">Street</label>
+                  <Input className="h-8" />
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-xs text-gray-500 mb-0.5">Street 2</label>
+                  <Input className="h-8" />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-0.5">City</label>
+                  <Input className="h-8" />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-0.5">State</label>
+                  <Input className="h-8" />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-0.5">Zip</label>
+                  <Input className="h-8" />
+                </div>
+                <div className="col-span-2 flex items-center gap-2 mt-1">
+                  <label className="block text-xs text-gray-500">Use Project Templates</label>
+                  <span className="text-gray-400 cursor-pointer" title="Info">&#9432;</span>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full text-lg font-bold  bg-[linear-gradient(90deg,_#fe9c09,_#fe9c09,_#00b6dd,_#006eaf)] text-white py-2.5 rounded hover:bg-[#0e1a2a] transition mt-3"
+              >
+                Create Project
+              </button>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
