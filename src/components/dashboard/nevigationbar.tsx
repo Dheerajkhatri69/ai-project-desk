@@ -9,24 +9,14 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
+import { Progress } from "@/components/ui/progress";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import MenuDashboardBar from "./MenuDashboardBar";
 import { ChevronRight, ChevronUp } from "lucide-react";
-import { CircularProgress } from "./CircularProgress";
 
 interface MenuItem {
   name: string;
   path: string;
-}
-
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  progress: number;
-  status: "Pending" | "Bidding" | "Submittal" | "Unscheduled" | "Started" | "Completed";
-  customer: string;
-  type?: string;
 }
 
 interface NavigationMenuDemoProps {
@@ -42,79 +32,50 @@ export function NavigationMenuDemo({
   showMenuBar,
   setShowMenuBar,
 }: NavigationMenuDemoProps) {
-  const projects: Project[] = [
+  const projects = [
     {
-      id: 1001,
-      title: "Bharti",
-      description: "Bharti Khatri (Upwork)",
-      progress: 50,
-      status: "Pending",
-      customer: "Time & Material",
-    },
-    {
-      id: 104,
-      title: "ACB104 Cabrillo HS",
-      description: "Long Beach Unified School District",
-      progress: 100,
-      status: "Started",
-      customer: "LUSD",
-    },
-    {
-      id: 105,
-      title: "ACB105 Security Gates",
-      description: "Orange County Transportation Authority",
-      progress: 20,
-      status: "Unscheduled",
-      customer: "OCTA",
-    },
-    {
-      id: 106,
-      title: "ACB106 Vincent Park Pavilion Replacement",
-      description: "City of Inglewood",
-      progress: 30,
-      status: "Unscheduled",
-      customer: "Inglewood",
-    },
-    {
-      id: 107,
-      title: "ACB107 Oak Canyon Nature Center",
-      description: "City of Anaheim",
+      id: 1,
+      title: "Sunset Villas",
+      description: "Residential complex with 50 units",
       progress: 75,
-      status: "Unscheduled",
-      customer: "Anaheim",
+    },
+    {
+      id: 2,
+      title: "Downtown Office Tower",
+      description: "32-story commercial building",
+      progress: 50,
+    },
+    {
+      id: 3,
+      title: "Riverside Park",
+      description: "Community park development",
+      progress: 18,
+    },
+        {
+      id: 4,
+      title: "Riverside Park",
+      description: "Community park development",
+      progress: 18,
+    },
+        {
+      id: 5,
+      title: "Riverside Park",
+      description: "Community park development",
+      progress: 18,
+    },
+        {
+      id: 6,
+      title: "Riverside Park",
+      description: "Community park development",
+      progress: 18,
     },
   ];
 
-  const getStatusColor = (status: Project["status"]) => {
-    switch (status) {
-      case "Pending":
-        return "bg-yellow-400 text-yellow-800";
-      case "Bidding":
-        return "bg-blue-100 text-blue-700";
-      case "Submittal":
-        return "bg-gray-300 text-gray-800";
-      case "Unscheduled":
-        return "bg-red-100 text-red-700";
-      case "Started":
-        return "bg-green-100 text-green-700";
-      case "Completed":
-        return "bg-gray-200 text-gray-600";
-      default:
-        return "bg-gray-100 text-gray-700";
-    }
-  };
-
-  const getDotColor = (status: Project["status"]) => {
-    switch (status) {
-      case "Pending":
-        return "bg-yellow-500";
-      case "Started":
-        return "bg-green-500";
-      case "Unscheduled":
-        return "bg-red-500";
-      default:
-        return "bg-gray-400";
-    }
+  // ✅ Determine color based on progress value
+  const getColorClass = (progress: number) => {
+    if (progress >= 75) return { bg: "bg-green-500", border: "border-green-500", badge: "bg-green-100 text-green-700", label: "Started" };
+    if (progress >= 50) return { bg: "bg-yellow-500", border: "border-yellow-500", badge: "bg-yellow-100 text-yellow-700", label: "Pending" };
+    return { bg: "bg-red-500", border: "border-red-500", badge: "bg-red-100 text-red-700", label: "Unscheduled" };
   };
 
   return (
@@ -136,75 +97,41 @@ export function NavigationMenuDemo({
                 <ChevronRight className="w-4 h-4" />
               </button>
             </SheetTrigger>
-            <SheetContent side="left" className="p-2">
+            <SheetContent side="left" className="w-[400px] sm:w-[540px] overflow-y-scroll hide-scrollbar">
               <VisuallyHidden>
                 <SheetTitle>Project Selection</SheetTitle>
-                <SheetDescription>List of available projects</SheetDescription>
+                <SheetDescription>
+                  List of available projects with completion status
+                </SheetDescription>
               </VisuallyHidden>
-              <div className="space-y-4 overflow-y-auto pr-1 hide-scrollbar">
-
+              <div className="p-4 space-y-6">
                 <h2 className="text-2xl font-bold">Projects</h2>
                 <div className="space-y-4">
-                  {projects.map((project) => (
-                    <div
-                      key={project.id}
-                      className="flex items-start justify-between p-3 border rounded-md bg-white shadow-sm"
-                    >
-                      <div className="flex items-start gap-3">
-                        {/* Left dot */}
-                        <span
-                          className={`h-3 w-3 mt-1 rounded-full ${getDotColor(
-                            project.status
-                          )}`}
-                        ></span>
-
-                        <div>
-                          {/* Title */}
-                          <div className="text-sm font-bold text-gray-900">
-                            {project.title} ({project.id})
+                  {projects.map((project) => {
+                    const { bg, border, badge, label } = getColorClass(project.progress);
+                    return (
+                      <div
+                        key={project.id}
+                        className={`border rounded-lg p-4 border-l-4 ${border}`}
+                      >
+                        <div className="flex justify-between items-start mb-2">
+                          <div>
+                            <h3 className="font-medium">{project.title}</h3>
+                            <p className="text-sm text-muted-foreground">
+                              {project.description}
+                            </p>
                           </div>
-
-                          {/* Optional type */}
-                          {project.customer && (
-                            <div className="inline-block mt-1 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">
-                              {project.customer}
-                            </div>
-                          )}
-
-                          {/* Description */}
-                          <div className="text-xs text-gray-600 mt-0.5">
-                            {project.description}
-                          </div>
-
-                          {/* Status Badge */}
-                          <div
-                            className={`inline-block mt-2 text-xs px-2 py-0.5 rounded font-medium border border-gray-300 ${getStatusColor(
-                              project.status
-                            )}`}
-                          >
-                            {project.status}
-                          </div>
+                          <span className="text-sm font-medium">
+                            {project.progress}%
+                          </span>
                         </div>
+                        <div className={`inline-block mb-1 text-xs px-2 py-0.5 rounded font-medium ${badge}`}>
+                          {label}
+                        </div>
+                        <Progress value={project.progress} className={`h-2 ${bg}`} />
                       </div>
-
-                      {/* Progress */}
-                      <div className="flex items-center">
-                        <CircularProgress
-                          value={project.progress}
-                          size={40}
-                          stroke={5}
-                          color={
-                            project.status === "Started"
-                              ? "#10b981"
-                              : project.status === "Pending"
-                                ? "#facc15"
-                                : "#ef4444"
-                          }
-                        />
-                      </div>
-
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </SheetContent>
@@ -219,8 +146,9 @@ export function NavigationMenuDemo({
           >
             <span>Menu</span>
             <ChevronUp
-              className={`w-5 h-5 transform transition-transform duration-300 ${showMenuBar ? "rotate-180" : "rotate-0"
-                }`}
+              className={`w-5 h-5 transform transition-transform duration-300 ${
+                showMenuBar ? "rotate-180" : "rotate-0"
+              }`}
             />
             {favorites.map((fav) => (
               <Link
